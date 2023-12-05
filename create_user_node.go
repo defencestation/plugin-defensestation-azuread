@@ -43,16 +43,11 @@ func (a *AzureADPlugin) CreateUserNode(azureWrapper *cmd.AzureWrapper) error {
 	propsMap.AddType("personnel_id","string")
 
 	schema := &plugin.Schema{
-		ID: []string{"mail"},
-		Labels: []string{"mail", "personnel", "alais"},
+		ID: []string{"email"},
+		Labels: []string{"email", "personnel"},
 		Props: propsMap.GetMap(),
-		RelationsKey: "relations",
-		Relation: &plugin.Relation{
-			ID: []string{"relations_id"},
-			EndID: []string{"email"},
-			Type: []string{"rtype"},
-			Props: map[string]string{},
-		},
+		// RelationsKey: "relations",
+		// Relation: &plugin.Relation{},
 		ReplaceKeys: map[string]string{
 			"mail": "email",
 			"name__familyName": "last_name",
