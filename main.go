@@ -26,11 +26,11 @@ const (
 )
 
 type Options struct {
-	ApplicationId string 
-	ClientSecret string 
-	Tenant string
-	Users bool
-	Groups bool
+	ApplicationId string `json:"application_id"`
+	ClientSecret string `json:"client_secret"`
+	Tenant string `json:"tenant"`
+	Users bool `json:"users"`
+	Groups bool `json:"groups"`
 	// Apps bool
 } 
 
