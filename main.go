@@ -147,6 +147,9 @@ func startPlugin(ctx context.Context, mainEvent events.CloudWatchEvent) ([]byte,
 	// Create a scanner to read the file line by line
 	scanner := bufio.NewScanner(file)
 
+
+
+	azureWrapperArr := []*cmd.AzureWrapper{}
 	// Iterate through lines and parse each JSON object
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -162,7 +165,7 @@ func startPlugin(ctx context.Context, mainEvent events.CloudWatchEvent) ([]byte,
 		}
 
 		if azureWrapper.Kind == enums.KindAZUser {
-			azuread.CreateUserNode(azureWrapper)
+			azureWrapperArr = append(azureWrapperArr, azureWrapper)
 		}
 		// if azureWrapper.Kind == enums.KindAZGroup {
 		// 	CreateGroupNode(azureWrapper)
@@ -171,6 +174,8 @@ func startPlugin(ctx context.Context, mainEvent events.CloudWatchEvent) ([]byte,
 		// 	CreateGroupRelation(azureWrapper)
 		// }
 	}
+
+	azuread.CreateUserNode(azureWrapperArr)
 
 	if err := scanner.Err(); err != nil {
 		fmt.Println("Error reading file:", err)
