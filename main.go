@@ -120,7 +120,7 @@ func startPlugin(ctx context.Context, mainEvent events.CloudWatchEvent) ([]byte,
 
 	log.Println("client created, listing all data...")
 	stream := cmd.ListAll(ctx, *azuread.client)
-	file, err := os.Create("output.json")
+	file, err := os.Create("/tmp/output.json")
 	if err != nil {
 		panic(err)
 	}
@@ -137,7 +137,7 @@ func startPlugin(ctx context.Context, mainEvent events.CloudWatchEvent) ([]byte,
 	}
 
 	// Open the file
-	file, err = os.Open("output.json")
+	file, err = os.Open("/tmp/output.json")
 	if err != nil {
 		fmt.Println("Error opening file:", err)
 		return nil, err
