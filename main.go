@@ -12,7 +12,7 @@ import (
     cmd "github.com/defensestation/azurehound/cmd"
     enums "github.com/defensestation/azurehound/enums"
     plugin "github.com/defensestation/pluginutils"
-    // models "github.com/defensestation/azurehound/models"
+    // models "github.com/defensestation/azurehound/models"m
     client "github.com/defensestation/azurehound/client"
     client_config "github.com/defensestation/azurehound/client/config"
 
