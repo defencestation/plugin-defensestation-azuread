@@ -37,8 +37,11 @@ func (ad *AzureAd) Run(ctx context.Context) (error) {
    }
 
    // get all userons
-   ad.GetUsers(ctx)
-
+   err = ad.GetUsers(ctx)
+   if err != nil {
+   	fmt.Println(err)
+   	return err
+   }
    return nil
 }
 
