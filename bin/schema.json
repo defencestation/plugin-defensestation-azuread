@@ -9,15 +9,6 @@
 		  	"personnel_id": "string",
 		  	"type": "string"
 		  },
-		  "relations": [
-		    {
-		      "relation_key": "relations",
-		      "end_relation": {
-		        "end_id": "email",
-		        "type": "supervisor_type"
-		      }
-		    }
-		  ],
 		  "replace_keys": {
 		  	"mail": "email",
 			"displayName": "name"
