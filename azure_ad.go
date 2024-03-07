@@ -22,7 +22,7 @@ func NewAzureADPlugin(plugin *plugin.Plugin) *AzureAd {
 }
 
 func (ad *AzureAd) Run(ctx context.Context) (error) {
-	err := ad.plugin.ValidateOptions("application_id", "client_secret", "tenant")
+	err := ad.plugin.ValidateOptions("application_id", "client_secret", "tenant", "group_name")
 	if err != nil {
 		return err
 	}
@@ -30,6 +30,7 @@ func (ad *AzureAd) Run(ctx context.Context) (error) {
 	applicationId, _ := ad.plugin.GetOption("application_id");
     clientSecret, _ := ad.plugin.GetOption("client_secret");
     Tenant, _ := ad.plugin.GetOption("tenant");
+    groupName, _ := ad.plugin.GetOption("group_name");
 
    err = ad.setAzureADClient(ctx,  applicationId.(string), clientSecret.(string), Tenant.(string))
    if err != nil {
@@ -42,6 +43,15 @@ func (ad *AzureAd) Run(ctx context.Context) (error) {
    	fmt.Println(err)
    	return err
    }
+
+   if groupName.(string) != "" {
+   	err = ad.GetGroupUsers(ctx, groupName.(string))
+	   if err != nil {
+	   	fmt.Println(err)
+	   	return err
+	   }
+   }
+   
    return nil
 }
 
