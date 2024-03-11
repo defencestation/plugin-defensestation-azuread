@@ -30,15 +30,17 @@ func (ad *AzureAd) Run(ctx context.Context) (error) {
 	applicationId, _ := ad.plugin.GetOption("application_id");
     clientSecret, _ := ad.plugin.GetOption("client_secret");
     Tenant, _ := ad.plugin.GetOption("tenant");
-    groupName, _ := ad.plugin.GetOption("group_name");
+    groupNamesInterface, _ := ad.plugin.GetOption("group_names");
+    groupNames := groupNamesInterface.([]map[string]string)
 
    err = ad.setAzureADClient(ctx,  applicationId.(string), clientSecret.(string), Tenant.(string))
    if err != nil {
    		return fmt.Errorf("Unable setup azuread client: %v", err)
    }
 
+
    // get all userons
-   if groupName.(string) == "" {
+   if len(groupNames) == 0 {
    	err = ad.GetUsers(ctx)
 	   if err != nil {
 	   	fmt.Println(err)
@@ -46,12 +48,14 @@ func (ad *AzureAd) Run(ctx context.Context) (error) {
 	   }
    }
 
-   if groupName.(string) != "" {
-   	err = ad.GetGroupUsers(ctx, groupName.(string))
+   if len(groupNames) != 0 {
+   	for _, group := range(groupNames) {
+   		err = ad.GetGroupUsers(ctx, group["name"])
 	   if err != nil {
 	   	fmt.Println(err)
 	   	return err
 	   }
+   	}
    }
    
    return nil
