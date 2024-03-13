@@ -31,7 +31,7 @@ func (ad *AzureAd) Run(ctx context.Context) (error) {
     clientSecret, _ := ad.plugin.GetOption("client_secret");
     Tenant, _ := ad.plugin.GetOption("tenant");
     groupNamesInterface, _ := ad.plugin.GetOption("group_names");
-    groupNames := groupNamesInterface.([]map[string]string)
+    groupNames := groupNamesInterface.([]interface{})
 
    err = ad.setAzureADClient(ctx,  applicationId.(string), clientSecret.(string), Tenant.(string))
    if err != nil {
@@ -49,7 +49,8 @@ func (ad *AzureAd) Run(ctx context.Context) (error) {
    }
 
    if len(groupNames) != 0 {
-   	for _, group := range(groupNames) {
+   	for _, g := range groupNames{
+   		group := g.((map[string]string))
    		err = ad.GetGroupUsers(ctx, group["name"])
 	   if err != nil {
 	   	fmt.Println(err)
