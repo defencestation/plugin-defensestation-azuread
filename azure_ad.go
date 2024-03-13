@@ -50,8 +50,8 @@ func (ad *AzureAd) Run(ctx context.Context) (error) {
 
    if len(groupNames) != 0 {
    	for _, g := range groupNames{
-   		group := g.((map[string]string))
-   		err = ad.GetGroupUsers(ctx, group["name"])
+   		group := g.((map[string]interface{}))
+   		err = ad.GetGroupUsers(ctx, group["name"].(string))
 	   if err != nil {
 	   	fmt.Println(err)
 	   	return err
