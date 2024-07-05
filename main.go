@@ -1,41 +1,38 @@
 package main
 
 import (
+    "fmt"
 	"context"
 	"encoding/json"
 
-
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 	plugin "github.com/defensestation/pluginutils"
-    "github.com/aws/aws-lambda-go/lambda"
-    "github.com/aws/aws-lambda-go/events"   
 )
-
-const (
-	pluginName = "azuread"
-	employeeType = "employee"
-)
-
 
 func startPlugin(ctx context.Context, mainEvent events.CloudWatchEvent) ([]byte, error) {
-	event := &plugin.Event{}
-	json.Unmarshal(mainEvent.Detail, event)
+    fmt.Println("running")
+    event := &plugin.Event{}
+    json.Unmarshal(mainEvent.Detail, event)
+    fmt.Println(event)
+    fmt.Println("dsgadsgsagsdf")
 
-	newPlugin, err := plugin.New(event)
-	if err != nil {
-		return nil, err
-	}
+    newPlugin, err := plugin.New(ctx, event)
+    if err != nil {
+        return nil, err
+    }
 
-	azureAD := NewAzureADPlugin(newPlugin)
+    azurePlugin := NewAzurePlugin(newPlugin)
 
-	err = azureAD.Run(ctx)	
-	if err != nil {
-		return nil, err
-	}
+    err = azurePlugin.Run(ctx)
+    if err != nil {
+        return nil, err
+    }
 
-	return newPlugin.Complete() 
+    return newPlugin.Complete()
 }
 
-
 func main() {
-	lambda.Start(startPlugin)
+    //test
+    lambda.Start(startPlugin)
 }

@@ -3,69 +3,20 @@ package main
 import (
 	"fmt"
 	"strings"
-	"bufio"
-	"os"
 	"encoding/json"
 	"context"
 
-	cmd "github.com/defensestation/azurehound/cmd"
-    enums "github.com/defensestation/azurehound/enums"
     plugin "github.com/defensestation/pluginutils"
     models "github.com/defensestation/azurehound/models"
 )
 
-func (ad *AzureAd) GetGroupUsers(ctx context.Context, groupName string) error {
-	stream := cmd.ListAll(ctx, *ad.client)
-	file, err := os.Create("/tmp/output.json")
-	if err != nil {
-		return err 
-	}
-	defer file.Close()
+const (
+	groupMemberType = "AzureADGroupMember"
+)
 
-	encoder := json.NewEncoder(file)
-
-	// Iterate over the stream and write each item to the file
-	for item := range stream {
-		// Assuming the data in the stream is structured, you may need to adjust this part
-		if err := encoder.Encode(item); err != nil {
-			 return err
-		}
-	}
-
-	// Open the file
-	file, err = os.Open("/tmp/output.json")
-	if err != nil {
-		return  err
-	}
-	defer file.Close()
-
-	// Create a scanner to read the file line by line
-	scanner := bufio.NewScanner(file)
-
-
-
-	graph, ok := ad.plugin.GetGraph(employeeType)
-	if !ok {
-		return fmt.Errorf("unable to find %s graph", employeeType)
-	} 
-
-
-	// Iterate through lines and parse each JSON object
-	for scanner.Scan() {
-		line := scanner.Text()
-
-		// Create a new AppOwnerNode to store the parsed data
-		var azureWrapper *cmd.AzureWrapper
-
-		// Unmarshal the JSON data from the line into the AppOwnerNode struct
-		err := json.Unmarshal([]byte(line), &azureWrapper)
-		if err != nil {
-			fmt.Println("Error:", err)
-			continue
-		}
-		if azureWrapper.Kind == enums.KindAZGroupMember {
+func (ad *AzureADPlugin) GetGroupUsers(ctx context.Context, data interface{}) error {
 			var groupMembers *models.GroupMembers
-			groupMembersJson, err := json.Marshal(azureWrapper.Data) 
+			groupMembersJson, err := json.Marshal(data) 
 			if err != nil {
 				return err
 			}
@@ -85,7 +36,10 @@ func (ad *AzureAd) GetGroupUsers(ctx context.Context, groupName string) error {
 				if err != nil {
 					return err
 				}
-				groupMemberMapInterface := plugin.StructToMap(user)
+				groupMemberMapInterface, err := plugin.StructToMap(user)
+				if err != nil {
+					fmt.Errorf("failed to marshal: %v", err)
+				}
 
 				if user.DisplayName != "" {
 					splitName := strings.Split(user.DisplayName, " ")
@@ -99,16 +53,31 @@ func (ad *AzureAd) GetGroupUsers(ctx context.Context, groupName string) error {
 				}
 
 				groupMemberMapInterface["type"]    	 = "employee"
-				groupMemberMapInterface["service"] = "dsc_service_policy_manager"
+				// groupMemberMapInterface["service"] = "dsc_service_policy_manager"
 				groupMemberMapInterface["personnel"]    = "personnel"
-				groupMemberMapInterface["personnel_id"] = fmt.Sprintf("%s_%s", ad.plugin.Name, user.Mail)
+				// groupMemberMapInterface["personnel_id"] = fmt.Sprintf("%s_%s", ad.plugin.Name, user.Mail)
 
-				err = graph.AddNode(groupMemberMapInterface)
+				labels := []string{groupMemberType}
+				graph := ad.Plugin.AddOrFindGraph(userType, plugin.NewSchema(nil))
+
+				
+				newNode, err := graph.NewNode(plugin.Personnel, groupMemberType, user.Id, user.DisplayName, labels, groupMemberMapInterface)
 				if err != nil {
-					return err
+					fmt.Errorf("unable to create groupmember node: %v", err)
+				}
+
+				// relation to the user 
+				_, err = newNode.NewRelation(user.Mail, plugin.BELONGS_TO, nil)
+				if err != nil {
+					return fmt.Errorf("unable to create user to groupmember relation: %v", err)
+				}
+
+				// relation to the group 
+				_, err = newNode.NewRelation(groupMembers.GroupId, plugin.BELONGS_TO, nil)
+				if err != nil {
+					return fmt.Errorf("unable to create group to user relation: %v", err)
 				}
 			}
-		}
-}
-return nil
+
+	return nil
 }

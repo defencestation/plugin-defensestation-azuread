@@ -1,6 +1,5 @@
 *.DS_STORE
 
-go.mod
-go.sum
 output.json
 abcd.go
+test
