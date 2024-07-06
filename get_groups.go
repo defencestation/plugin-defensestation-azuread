@@ -31,10 +31,10 @@ func (ad *AzureADPlugin) GetGroups(ctx context.Context, data interface{}) error 
 			}
 
 			labels := []string{groupType}
-			graph := ad.Plugin.AddOrFindGraph(userType, plugin.NewSchema(nil))
+			graph := ad.Plugin.AddOrFindGraph(groupType, plugin.NewSchema(nil))
 
 			
-			_, err = graph.NewNode(plugin.Personnel, groupType, group.Id, group.DisplayName, labels, props)
+			_, err = graph.NewNode(plugin.Group, groupType, group.Id, group.DisplayName, labels, props)
 			if err != nil {
 				fmt.Errorf("unable to create subscription node: %v", err)
 			}

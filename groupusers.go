@@ -58,7 +58,7 @@ func (ad *AzureADPlugin) GetGroupUsers(ctx context.Context, data interface{}) er
 				// groupMemberMapInterface["personnel_id"] = fmt.Sprintf("%s_%s", ad.plugin.Name, user.Mail)
 
 				labels := []string{groupMemberType}
-				graph := ad.Plugin.AddOrFindGraph(userType, plugin.NewSchema(nil))
+				graph := ad.Plugin.AddOrFindGraph(groupMemberType, plugin.NewSchema(nil))
 
 				
 				newNode, err := graph.NewNode(plugin.Personnel, groupMemberType, user.Id, user.DisplayName, labels, groupMemberMapInterface)

@@ -89,12 +89,8 @@ func (ad *AzureADPlugin) List(ctx context.Context) error {
 				return err
 			}
 
-		// default:
-		// 	err := ad.CreateDefaultNode(ctx, scanner)
-		//     if err != nil {
-		//    	  fmt.Println(err)
-		//    	  return err
-		//     }
+		default:
+			fmt.Println("not handled by plugin ", azureWrapper.Kind )
 
 		}
 
