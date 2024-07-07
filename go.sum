@@ -111,6 +111,14 @@ github.com/defensestation/azurehound v0.0.0-20240705213104-de726c77d82d h1:m8hkU
 github.com/defensestation/azurehound v0.0.0-20240705213104-de726c77d82d/go.mod h1:u3suetyhN2TUGbEOoM2qU+hRDGrRVlc19kcj6oCQNVA=
 github.com/defensestation/azurehound v0.0.0-20240707143225-97144434c7f7 h1:F+mml7l1jqJpfCoT+yfsi1nrbMfPNupIhybHb1dyHsc=
 github.com/defensestation/azurehound v0.0.0-20240707143225-97144434c7f7/go.mod h1:u3suetyhN2TUGbEOoM2qU+hRDGrRVlc19kcj6oCQNVA=
+github.com/defensestation/azurehound v0.0.0-20240707212900-0728a4783412 h1:ve19dm8L3ayT2tK3o/Hz8AWQ+PdIkKfRckZPyDmRUKk=
+github.com/defensestation/azurehound v0.0.0-20240707212900-0728a4783412/go.mod h1:u3suetyhN2TUGbEOoM2qU+hRDGrRVlc19kcj6oCQNVA=
+github.com/defensestation/azurehound v0.0.0-20240707213650-21721959558e h1:1KEwsxzk7A8clqCF9aTd6ViDqCsCqOlS9N/EbmOCttY=
+github.com/defensestation/azurehound v0.0.0-20240707213650-21721959558e/go.mod h1:u3suetyhN2TUGbEOoM2qU+hRDGrRVlc19kcj6oCQNVA=
+github.com/defensestation/azurehound v0.0.0-20240707213931-2fcf296c3746 h1:UETXkS3aNR2oclM3mU6LSPnAVPsJAO57CU1Tapg7ZvI=
+github.com/defensestation/azurehound v0.0.0-20240707213931-2fcf296c3746/go.mod h1:u3suetyhN2TUGbEOoM2qU+hRDGrRVlc19kcj6oCQNVA=
+github.com/defensestation/azurehound v0.0.0-20240707214119-40ddf7653fca h1:DuhojX8YZ2bLdca1tu54tJXX3YzNoRnJgBSVdyzaFn0=
+github.com/defensestation/azurehound v0.0.0-20240707214119-40ddf7653fca/go.mod h1:u3suetyhN2TUGbEOoM2qU+hRDGrRVlc19kcj6oCQNVA=
 github.com/defensestation/goutils v0.0.0-20240615214920-4c235ed080ef h1:wemON+y3jcmUzPeQpnxe0Cm68pegmK6qIv0dv5oWjUY=
 github.com/defensestation/goutils v0.0.0-20240615214920-4c235ed080ef/go.mod h1:MxM5yY6rMg2cuD++xEt77zE5lfR37MrWOPlKN+PcYC0=
 github.com/defensestation/pluginutils v0.0.0-20240703025805-b2b7a6094f8c h1:srJ/LTsmfjoTTLt3M8yz/yzDA3gsNUAAWSwyKcxl3Z8=

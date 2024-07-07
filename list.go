@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	// "reflect"
 
 	cmd "github.com/defensestation/azurehound/cmd"
 	enums "github.com/defensestation/azurehound/enums"
@@ -14,25 +15,29 @@ func (ad *AzureADPlugin) List(ctx context.Context) error {
 	stream := cmd.ListAll(ctx, *ad.Client)
 
 	for item := range stream {
-		// Assert the type of item to []byte
-		data, ok := item.([]byte)
-		if !ok {
-			fmt.Println("Error: item is not of type []byte")
-			continue
-		}
+		// Print the type of item
+		// fmt.Printf("Type of item: %s\n", reflect.TypeOf(item))
 
 		// Assuming the data in the stream is structured
 		var azureWrapper *cmd.AzureWrapper
 
-		// Unmarshal the JSON data from the stream item into the AzureWrapper struct
-		err := json.Unmarshal(data, &azureWrapper)
+		// Convert the item to JSON if necessary
+		data, err := json.Marshal(item)
 		if err != nil {
-			fmt.Println("Error:", err)
+			fmt.Println("Error marshalling item:", err)
+			continue
+		}
+
+		// Unmarshal the JSON data from the stream item into the AzureWrapper struct
+		err = json.Unmarshal(data, &azureWrapper)
+		if err != nil {
+			fmt.Println("Error unmarshalling item:", err)
 			continue
 		}
 
 		switch azureWrapper.Kind {
 		case enums.KindAZUser:
+			// fmt.Println("getting users")
 			err := ad.GetUsers(ctx, azureWrapper.Data)
 			if err != nil {
 				fmt.Println(err)
@@ -68,7 +73,7 @@ func (ad *AzureADPlugin) List(ctx context.Context) error {
 			}
 
 		default:
-			fmt.Println("not handled by plugin ", azureWrapper.Kind)
+			// fmt.Println("not handled by plugin ", azureWrapper.Kind)
 		}
 	}
 
