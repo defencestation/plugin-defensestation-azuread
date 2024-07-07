@@ -14,6 +14,7 @@ func (ad *AzureADPlugin) List(ctx context.Context) error {
 	// List all
 	stream := cmd.ListAll(ctx, *ad.Client)
 
+	fmt.Println("started getting data")
 	for item := range stream {
 		// Print the type of item
 		// fmt.Printf("Type of item: %s\n", reflect.TypeOf(item))
@@ -73,9 +74,11 @@ func (ad *AzureADPlugin) List(ctx context.Context) error {
 			}
 
 		default:
-			// fmt.Println("not handled by plugin ", azureWrapper.Kind)
+			fmt.Println("not handled by plugin ", azureWrapper.Kind)
 		}
 	}
+
+	fmt.Println("done getting data")
 
 	return nil
 }
