@@ -109,6 +109,8 @@ github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/defensestation/azurehound v0.0.0-20240705213104-de726c77d82d h1:m8hkUvEBxee8X1eaAidf0SyPnLtHBDTH0YLMymdDjnA=
 github.com/defensestation/azurehound v0.0.0-20240705213104-de726c77d82d/go.mod h1:u3suetyhN2TUGbEOoM2qU+hRDGrRVlc19kcj6oCQNVA=
+github.com/defensestation/azurehound v0.0.0-20240707143225-97144434c7f7 h1:F+mml7l1jqJpfCoT+yfsi1nrbMfPNupIhybHb1dyHsc=
+github.com/defensestation/azurehound v0.0.0-20240707143225-97144434c7f7/go.mod h1:u3suetyhN2TUGbEOoM2qU+hRDGrRVlc19kcj6oCQNVA=
 github.com/defensestation/goutils v0.0.0-20240615214920-4c235ed080ef h1:wemON+y3jcmUzPeQpnxe0Cm68pegmK6qIv0dv5oWjUY=
 github.com/defensestation/goutils v0.0.0-20240615214920-4c235ed080ef/go.mod h1:MxM5yY6rMg2cuD++xEt77zE5lfR37MrWOPlKN+PcYC0=
 github.com/defensestation/pluginutils v0.0.0-20240703025805-b2b7a6094f8c h1:srJ/LTsmfjoTTLt3M8yz/yzDA3gsNUAAWSwyKcxl3Z8=

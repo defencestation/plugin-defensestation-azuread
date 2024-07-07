@@ -5,7 +5,7 @@ go 1.22.1
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.7.0
 	github.com/aws/aws-lambda-go v1.47.0
-	github.com/defensestation/azurehound v0.0.0-20240705213104-de726c77d82d
+	github.com/defensestation/azurehound v0.0.0-20240707143225-97144434c7f7
 	github.com/defensestation/pluginutils v0.0.0-20240703025805-b2b7a6094f8c
 	github.com/microsoftgraph/msgraph-sdk-go v1.45.0
 	github.com/microsoftgraph/msgraph-sdk-go-core v1.1.0
