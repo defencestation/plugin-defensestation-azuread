@@ -33,7 +33,8 @@ func (ad *AzureADPlugin) GetApps(ctx context.Context, data interface{}) error {
 			labels := []string{appType}
 			graph := ad.Plugin.AddOrFindGraph(appType, plugin.NewSchema(nil))
 
-			
+			fmt.Println("##############")
+			fmt.Printf("adding app  node %s\n", app.DisplayName)
 			_, err = graph.NewNode(plugin.Application, appType, app.AppId, app.DisplayName, labels, props)
 			if err != nil {
 				fmt.Errorf("unable to create app node: %v", err)

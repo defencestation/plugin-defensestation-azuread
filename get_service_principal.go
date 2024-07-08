@@ -33,12 +33,15 @@ func (ad *AzureADPlugin) GetServicePrincipal(ctx context.Context, data interface
 			labels := []string{servicePrinicipalType}
 			graph := ad.Plugin.AddOrFindGraph(servicePrinicipalType, plugin.NewSchema(nil))
 
-			
+			fmt.Println("@@@@@@@@@@@@@@@@@")
+			fmt.Printf("adding servicePrincipal  node %s\n", servicePrincipal.Id)
 			newNode, err := graph.NewNode(plugin.Role, servicePrinicipalType, servicePrincipal.Id, servicePrincipal.Id, labels, props)
 			if err != nil {
 				fmt.Errorf("unable to create servicePrincipal node: %v", err)
 			}
 
+			fmt.Println("@@@@@@@@@@@@@@@@@")
+			fmt.Printf("adding servicePrincipal relation  node %s\n", servicePrincipal.AppId)
 			// relation to the user 
 			_, err = newNode.NewRelation(servicePrincipal.AppId, plugin.BELONGS_TO, nil)
 			if err != nil {

@@ -47,7 +47,9 @@ func (ad *AzureADPlugin) GetUsers(ctx context.Context, data interface{}) error {
 	// userMapInterface["service"] = "dsc_service_policy_manager"
 	props["personnel"]    = "personnel"
 	// props["personnel_id"] = fmt.Sprintf("%s_%s", ad.plugin.Name, user.Mail)
-
+	// log to debug
+	fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~")
+	fmt.Printf("adding user node %s\n", user.Mail)
 	labels := []string{userType}
 	graph := ad.Plugin.AddOrFindGraph(userType, plugin.NewSchema(nil))
 
