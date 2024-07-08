@@ -127,6 +127,10 @@ github.com/defensestation/goutils v0.0.0-20240615214920-4c235ed080ef h1:wemON+y3
 github.com/defensestation/goutils v0.0.0-20240615214920-4c235ed080ef/go.mod h1:MxM5yY6rMg2cuD++xEt77zE5lfR37MrWOPlKN+PcYC0=
 github.com/defensestation/pluginutils v0.0.0-20240703025805-b2b7a6094f8c h1:srJ/LTsmfjoTTLt3M8yz/yzDA3gsNUAAWSwyKcxl3Z8=
 github.com/defensestation/pluginutils v0.0.0-20240703025805-b2b7a6094f8c/go.mod h1:7W3Wa9mxONN5mwOG4iRNbhiL5pg7tKBRBXfMV3k0IIU=
+github.com/defensestation/pluginutils v0.0.0-20240708065450-de39ed290eb8 h1:Zk1RL6PkB0pZXQrmIitBrOr8oq0mEsq3K95W9OBFjnM=
+github.com/defensestation/pluginutils v0.0.0-20240708065450-de39ed290eb8/go.mod h1:7W3Wa9mxONN5mwOG4iRNbhiL5pg7tKBRBXfMV3k0IIU=
+github.com/defensestation/pluginutils v0.0.0-20240708070353-2b7d9755edbb h1:4cBaiwX2LG/ZIKATatIjeDoQqsrYCqSPZk+kJYjzIAs=
+github.com/defensestation/pluginutils v0.0.0-20240708070353-2b7d9755edbb/go.mod h1:7W3Wa9mxONN5mwOG4iRNbhiL5pg7tKBRBXfMV3k0IIU=
 github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.4/go.mod h1:6rpuAdCZL397s3pYoYcLgu1mIlRU8Am5FuJP05cCM98=

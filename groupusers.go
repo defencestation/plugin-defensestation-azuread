@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"strings"
+	// "strings"
 	"encoding/json"
 	"context"
 
@@ -36,56 +36,56 @@ func (ad *AzureADPlugin) GetGroupUsers(ctx context.Context, data interface{}) er
 				if err != nil {
 					return err
 				}
-				groupMemberMapInterface, err := plugin.StructToMap(user)
-				if err != nil {
-					fmt.Errorf("failed to marshal: %v", err)
-				}
+				// groupMemberMapInterface, err := plugin.StructToMap(user)
+				// if err != nil {
+				// 	fmt.Errorf("failed to marshal: %v", err)
+				// }
 
-				if user.DisplayName != "" {
-					splitName := strings.Split(user.DisplayName, " ")
-					if len(splitName) >= 2 {
-						groupMemberMapInterface["first_name"]  = splitName[0]
-						groupMemberMapInterface["last_name"] = splitName[1]
-					}
-					if len(splitName) == 1 {
-						groupMemberMapInterface["first_name"]  = splitName[0]
-					}
-				}
+				// if user.DisplayName != "" {
+				// 	splitName := strings.Split(user.DisplayName, " ")
+				// 	if len(splitName) >= 2 {
+				// 		groupMemberMapInterface["first_name"]  = splitName[0]
+				// 		groupMemberMapInterface["last_name"] = splitName[1]
+				// 	}
+				// 	if len(splitName) == 1 {
+				// 		groupMemberMapInterface["first_name"]  = splitName[0]
+				// 	}
+				// }
 
-				groupMemberMapInterface["type"]    	 = "employee"
-				// groupMemberMapInterface["service"] = "dsc_service_policy_manager"
-				groupMemberMapInterface["personnel"]    = "personnel"
-				// groupMemberMapInterface["personnel_id"] = fmt.Sprintf("%s_%s", ad.plugin.Name, user.Mail)
+				// groupMemberMapInterface["type"]    	 = "employee"
+				// // groupMemberMapInterface["service"] = "dsc_service_policy_manager"
+				// groupMemberMapInterface["personnel"]    = "personnel"
+				// // groupMemberMapInterface["personnel_id"] = fmt.Sprintf("%s_%s", ad.plugin.Name, user.Mail)
 
-				labels := []string{groupMemberType}
-				graph := ad.Plugin.AddOrFindGraph(groupMemberType, plugin.NewSchema(nil))
+				// labels := []string{groupMemberType}
+				graph := ad.Plugin.AddOrFindGraph(userType, plugin.NewSchema(nil))
 
-				fmt.Println("000000000")
-				fmt.Printf("adding group member node %s\n", user.DisplayName)
-				newNode, err := graph.NewNode(plugin.Role, groupMemberType, user.Id, user.DisplayName, labels, groupMemberMapInterface)
-				if err != nil {
-					fmt.Errorf("unable to create groupmember node: %v", err)
-				}
+				// fmt.Println("000000000")
+				// fmt.Printf("adding group member node %s\n", user.DisplayName)
+				// newNode, err := graph.NewNode(plugin.Role, groupMemberType, user.Id, user.DisplayName, labels, groupMemberMapInterface)
+				// if err != nil {
+				// 	fmt.Errorf("unable to create groupmember node: %v", err)
+				// }
 
-				fmt.Println("000000000")
+				// fmt.Println("000000000")
 				fmt.Printf("adding group member relation to node %s\n", user.Mail)
-				endNodeId := user.Mail
+				startNodeId := user.Mail
 				if user.Mail == "" {
-					endNodeId = user.Id
+					startNodeId = user.Id
 				}
 				// relation to the user 
-				_, err = newNode.NewRelation(endNodeId, plugin.BELONGS_TO, nil)
+				_, err = graph.DirectRelation(startNodeId, groupMembers.GroupId, plugin.BELONGS_TO, nil)
 				if err != nil {
 					return fmt.Errorf("unable to create user to groupmember relation: %v", err)
 				}
 
-				fmt.Println("000000000")
-				fmt.Printf("adding group member relation to node %s\n", groupMembers.GroupId)
-				// relation to the group 
-				_, err = newNode.NewRelation(groupMembers.GroupId, plugin.BELONGS_TO, nil)
-				if err != nil {
-					return fmt.Errorf("unable to create group to user relation: %v", err)
-				}
+				// fmt.Println("000000000")
+				// fmt.Printf("adding group member relation to node %s\n", groupMembers.GroupId)
+				// // relation to the group 
+				// _, err = newNode.NewRelation(groupMembers.GroupId, plugin.BELONGS_TO, nil)
+				// if err != nil {
+				// 	return fmt.Errorf("unable to create group to user relation: %v", err)
+				// }
 			}
 
 	return nil
