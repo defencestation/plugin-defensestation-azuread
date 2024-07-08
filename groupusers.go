@@ -62,15 +62,19 @@ func (ad *AzureADPlugin) GetGroupUsers(ctx context.Context, data interface{}) er
 
 				fmt.Println("000000000")
 				fmt.Printf("adding group member node %s\n", user.DisplayName)
-				newNode, err := graph.NewNode(plugin.Personnel, groupMemberType, user.Id, user.DisplayName, labels, groupMemberMapInterface)
+				newNode, err := graph.NewNode(plugin.Role, groupMemberType, user.Id, user.DisplayName, labels, groupMemberMapInterface)
 				if err != nil {
 					fmt.Errorf("unable to create groupmember node: %v", err)
 				}
 
 				fmt.Println("000000000")
 				fmt.Printf("adding group member relation to node %s\n", user.Mail)
+				endNodeId := user.Mail
+				if user.Mail == "" {
+					endNodeId = user.Id
+				}
 				// relation to the user 
-				_, err = newNode.NewRelation(user.Mail, plugin.BELONGS_TO, nil)
+				_, err = newNode.NewRelation(endNodeId, plugin.BELONGS_TO, nil)
 				if err != nil {
 					return fmt.Errorf("unable to create user to groupmember relation: %v", err)
 				}

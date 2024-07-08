@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	// "reflect"
+	"sync"
 
 	cmd "github.com/defensestation/azurehound/cmd"
 	enums "github.com/defensestation/azurehound/enums"
@@ -15,10 +15,43 @@ func (ad *AzureADPlugin) List(ctx context.Context) error {
 	stream := cmd.ListAll(ctx, *ad.Client)
 
 	fmt.Println("started getting data")
-	for item := range stream {
-		// Print the type of item
-		// fmt.Printf("Type of item: %s\n", reflect.TypeOf(item))
 
+	var wg sync.WaitGroup
+	var mu sync.Mutex
+	items := make([]interface{}, 0, 100)
+
+	for item := range stream {
+		mu.Lock()
+		items = append(items, item)
+		if len(items) == 100 {
+			wg.Add(1)
+			go func(chunk []interface{}) {
+				defer wg.Done()
+				processChunk(ctx, ad, chunk, &mu)
+			}(items)
+			items = make([]interface{}, 0, 100)
+		}
+		mu.Unlock()
+	}
+
+	// Process any remaining items
+	if len(items) > 0 {
+		wg.Add(1)
+		go func(chunk []interface{}) {
+			defer wg.Done()
+			processChunk(ctx, ad, chunk, &mu)
+		}(items)
+	}
+
+	wg.Wait()
+
+	fmt.Println("done getting data")
+
+	return nil
+}
+
+func processChunk(ctx context.Context, ad *AzureADPlugin, chunk []interface{}, mu *sync.Mutex) {
+	for _, item := range chunk {
 		// Assuming the data in the stream is structured
 		var azureWrapper *cmd.AzureWrapper
 
@@ -36,49 +69,42 @@ func (ad *AzureADPlugin) List(ctx context.Context) error {
 			continue
 		}
 
+		// Lock the entire section that involves map writes
+		mu.Lock()
 		switch azureWrapper.Kind {
 		case enums.KindAZUser:
-			// fmt.Println("getting users")
 			err := ad.GetUsers(ctx, azureWrapper.Data)
 			if err != nil {
 				fmt.Println(err)
-				return err
 			}
 
 		case enums.KindAZApp:
 			err := ad.GetApps(ctx, azureWrapper.Data)
 			if err != nil {
 				fmt.Println(err)
-				return err
 			}
 
 		case enums.KindAZGroup:
 			err := ad.GetGroups(ctx, azureWrapper.Data)
 			if err != nil {
 				fmt.Println(err)
-				return err
 			}
 
 		case enums.KindAZGroupMember:
 			err := ad.GetGroupUsers(ctx, azureWrapper.Data)
 			if err != nil {
 				fmt.Println(err)
-				return err
 			}
 
 		case enums.KindAZServicePrincipal:
 			err := ad.GetServicePrincipal(ctx, azureWrapper.Data)
 			if err != nil {
 				fmt.Println(err)
-				return err
 			}
 
 		default:
 			fmt.Println("not handled by plugin ", azureWrapper.Kind)
 		}
+		mu.Unlock()
 	}
-
-	fmt.Println("done getting data")
-
-	return nil
 }

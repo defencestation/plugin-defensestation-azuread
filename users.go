@@ -14,6 +14,7 @@ import (
 
 const (
 	userType = "AzureADUser"
+	noMailFound = "NoMailFound"
 )
 
 func (ad *AzureADPlugin) GetUsers(ctx context.Context, data interface{}) error {
@@ -53,8 +54,12 @@ func (ad *AzureADPlugin) GetUsers(ctx context.Context, data interface{}) error {
 	labels := []string{userType}
 	graph := ad.Plugin.AddOrFindGraph(userType, plugin.NewSchema(nil))
 
-	
-	_, err = graph.NewNode(plugin.Personnel, userType, user.Mail, user.DisplayName, labels, props)
+	nodeId := user.Mail
+	if user.Mail == "" {
+		nodeId = user.Id
+		labels = append(labels, noMailFound)
+	}
+	_, err = graph.NewNode(plugin.Personnel, userType, nodeId, user.DisplayName, labels, props)
 	if err != nil {
 		fmt.Errorf("unable to create user node: %v", err)
 	
