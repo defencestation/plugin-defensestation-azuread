@@ -6,7 +6,7 @@ require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.7.0
 	github.com/aws/aws-lambda-go v1.47.0
 	github.com/defensestation/azurehound v0.0.0-20240707222902-c2b566bfe0a2
-	github.com/defensestation/pluginutils v0.0.0-20240708070353-2b7d9755edbb
+	github.com/defensestation/pluginutils v0.0.0-20240708072958-42d4e6b25b08
 	github.com/microsoftgraph/msgraph-sdk-go v1.45.0
 	github.com/microsoftgraph/msgraph-sdk-go-core v1.1.0
 )
