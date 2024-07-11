@@ -14,7 +14,7 @@ import (
 )
 
 func startPlugin(ctx context.Context, mainEvent events.CloudWatchEvent) ([]byte, error) {
-    fmt.Println("running")
+    fmt.Println("running...")
     event := &plugin.Event{}
     json.Unmarshal(mainEvent.Detail, event)
     fmt.Println(event)
