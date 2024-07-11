@@ -4,7 +4,7 @@ import (
 	"context"
 	// "encoding/json"
 	"fmt"
-	"sync"
+	// "sync"
 
 	cmd "github.com/defensestation/azurehound/cmd"
 	enums "github.com/defensestation/azurehound/enums"
@@ -16,10 +16,9 @@ func (ad *AzureADPlugin) List(ctx context.Context) error {
 
 	fmt.Println("started getting data")
 
-	var mu sync.Mutex
 
 	for item := range stream {
-		processItem(ctx, ad, item, &mu)
+		processItem(ctx, ad, item)
 	}
 
 	fmt.Println("done getting data")
@@ -27,7 +26,7 @@ func (ad *AzureADPlugin) List(ctx context.Context) error {
 	return nil
 }
 
-func processItem(ctx context.Context, ad *AzureADPlugin, item interface{}, mu *sync.Mutex) {
+func processItem(ctx context.Context, ad *AzureADPlugin, item interface{}) {
 	// Assuming the data in the stream is structured
 	// Assuming the data in the stream is structured
 	azureWrapper, ok := item.(cmd.AzureWrapper)
@@ -35,23 +34,6 @@ func processItem(ctx context.Context, ad *AzureADPlugin, item interface{}, mu *s
 		fmt.Println("Error: item is not of type cmd.AzureWrapper")
 		return
 	}
-	// // Convert the item to JSON if necessary
-	// data, err := json.Marshal(item)
-	// if err != nil {
-	// 	fmt.Println("Error marshalling item:", err)
-	// 	return
-	// }
-
-	// Unmarshal the JSON data from the stream item into the AzureWrapper struct
-	// err := json.Unmarshal(item.Data, &azureWrapper)
-	// if err != nil {
-	// 	fmt.Println("Error unmarshalling item:", err)
-	// 	return
-	// }
-
-	// Lock the entire section that involves map writes
-	mu.Lock()
-	defer mu.Unlock()
 
 	switch azureWrapper.Kind {
 	case enums.KindAZUser:
