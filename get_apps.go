@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"encoding/json"
+	// "encoding/json"
 	"context"
 
     plugin "github.com/defensestation/pluginutils"
@@ -14,16 +14,16 @@ const (
 )
 
 func (ad *AzureADPlugin) GetApps(ctx context.Context, data interface{}) error {
-			var app *models.App
-			appJson, err := json.Marshal(data) 
-			if err != nil {
-				return err
-			}
+			app := data.(models.App)
+			// appJson, err := json.Marshal(data) 
+			// if err != nil {
+			// 	return err
+			// }
 
-			err = json.Unmarshal(appJson, &app)
-			if err != nil {
-				return err
-			}
+			// err = json.Unmarshal(appJson, &app)
+			// if err != nil {
+			// 	return err
+			// }
 
 			props, err := plugin.StructToMap(app)
 			if err != nil {

@@ -8,6 +8,9 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	plugin "github.com/defensestation/pluginutils"
+    // _ "net/http/pprof"
+    // "log"
+    // "net/http"
 )
 
 func startPlugin(ctx context.Context, mainEvent events.CloudWatchEvent) ([]byte, error) {

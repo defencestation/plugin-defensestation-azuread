@@ -15,24 +15,16 @@ const (
 )
 
 func (ad *AzureADPlugin) GetGroupUsers(ctx context.Context, data interface{}) error {
-			var groupMembers *models.GroupMembers
-			groupMembersJson, err := json.Marshal(data) 
-			if err != nil {
-				return err
-			}
-
-			err = json.Unmarshal(groupMembersJson, &groupMembers)
-			if err != nil {
-				return err
-			}
+			groupMembers := data.(models.GroupMembers)
+			
 			for _, groupMember := range(groupMembers.Members) {
 				var user *models.User
-				userJson, err := json.Marshal(groupMember.Member) 
-				if err != nil {
-					return err
-				}
+				// userJson, err := json.Marshal(groupMember.Member) 
+				// if err != nil {
+				// 	return err
+				// }
 
-				err = json.Unmarshal(userJson, &user)
+				err := json.Unmarshal(groupMember.Member, &user)
 				if err != nil {
 					return err
 				}

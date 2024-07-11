@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
-	"encoding/json"
+	// "encoding/json"
 	"context"
 
 	// cmd "github.com/defensestation/azurehound/cmd"
@@ -18,16 +18,7 @@ const (
 )
 
 func (ad *AzureADPlugin) GetUsers(ctx context.Context, data interface{}) error {
-	var user *models.User
-	userJson, err := json.Marshal(data) 
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(userJson, &user)
-	if err != nil {
-		return err
-	}
+	user := data.(models.User)
 
 	props, err := plugin.StructToMap(user)
 	if err != nil {

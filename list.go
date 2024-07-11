@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"encoding/json"
+	// "encoding/json"
 	"fmt"
 	"sync"
 
@@ -16,95 +16,75 @@ func (ad *AzureADPlugin) List(ctx context.Context) error {
 
 	fmt.Println("started getting data")
 
-	var wg sync.WaitGroup
 	var mu sync.Mutex
-	items := make([]interface{}, 0, 100)
 
 	for item := range stream {
-		mu.Lock()
-		items = append(items, item)
-		if len(items) == 100 {
-			wg.Add(1)
-			go func(chunk []interface{}) {
-				defer wg.Done()
-				processChunk(ctx, ad, chunk, &mu)
-			}(items)
-			items = make([]interface{}, 0, 100)
-		}
-		mu.Unlock()
+		processItem(ctx, ad, item, &mu)
 	}
-
-	// Process any remaining items
-	if len(items) > 0 {
-		wg.Add(1)
-		go func(chunk []interface{}) {
-			defer wg.Done()
-			processChunk(ctx, ad, chunk, &mu)
-		}(items)
-	}
-
-	wg.Wait()
 
 	fmt.Println("done getting data")
 
 	return nil
 }
 
-func processChunk(ctx context.Context, ad *AzureADPlugin, chunk []interface{}, mu *sync.Mutex) {
-	for _, item := range chunk {
-		// Assuming the data in the stream is structured
-		var azureWrapper *cmd.AzureWrapper
+func processItem(ctx context.Context, ad *AzureADPlugin, item interface{}, mu *sync.Mutex) {
+	// Assuming the data in the stream is structured
+	// Assuming the data in the stream is structured
+	azureWrapper, ok := item.(cmd.AzureWrapper)
+	if !ok {
+		fmt.Println("Error: item is not of type cmd.AzureWrapper")
+		return
+	}
+	// // Convert the item to JSON if necessary
+	// data, err := json.Marshal(item)
+	// if err != nil {
+	// 	fmt.Println("Error marshalling item:", err)
+	// 	return
+	// }
 
-		// Convert the item to JSON if necessary
-		data, err := json.Marshal(item)
+	// Unmarshal the JSON data from the stream item into the AzureWrapper struct
+	// err := json.Unmarshal(item.Data, &azureWrapper)
+	// if err != nil {
+	// 	fmt.Println("Error unmarshalling item:", err)
+	// 	return
+	// }
+
+	// Lock the entire section that involves map writes
+	mu.Lock()
+	defer mu.Unlock()
+
+	switch azureWrapper.Kind {
+	case enums.KindAZUser:
+		err := ad.GetUsers(ctx, azureWrapper.Data)
 		if err != nil {
-			fmt.Println("Error marshalling item:", err)
-			continue
+			fmt.Println(err)
 		}
 
-		// Unmarshal the JSON data from the stream item into the AzureWrapper struct
-		err = json.Unmarshal(data, &azureWrapper)
+	case enums.KindAZApp:
+		err := ad.GetApps(ctx, azureWrapper.Data)
 		if err != nil {
-			fmt.Println("Error unmarshalling item:", err)
-			continue
+			fmt.Println(err)
 		}
 
-		// Lock the entire section that involves map writes
-		mu.Lock()
-		switch azureWrapper.Kind {
-		case enums.KindAZUser:
-			err := ad.GetUsers(ctx, azureWrapper.Data)
-			if err != nil {
-				fmt.Println(err)
-			}
-
-		case enums.KindAZApp:
-			err := ad.GetApps(ctx, azureWrapper.Data)
-			if err != nil {
-				fmt.Println(err)
-			}
-
-		case enums.KindAZGroup:
-			err := ad.GetGroups(ctx, azureWrapper.Data)
-			if err != nil {
-				fmt.Println(err)
-			}
-
-		case enums.KindAZGroupMember:
-			err := ad.GetGroupUsers(ctx, azureWrapper.Data)
-			if err != nil {
-				fmt.Println(err)
-			}
-
-		case enums.KindAZServicePrincipal:
-			err := ad.GetServicePrincipal(ctx, azureWrapper.Data)
-			if err != nil {
-				fmt.Println(err)
-			}
-
-		default:
-			fmt.Println("not handled by plugin ", azureWrapper.Kind)
+	case enums.KindAZGroup:
+		err := ad.GetGroups(ctx, azureWrapper.Data)
+		if err != nil {
+			fmt.Println(err)
 		}
-		mu.Unlock()
+
+	case enums.KindAZGroupMember:
+		err := ad.GetGroupUsers(ctx, azureWrapper.Data)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+	case enums.KindAZServicePrincipal:
+		err := ad.GetServicePrincipal(ctx, azureWrapper.Data)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+	default:
+		fmt.Println("not handled by plugin", azureWrapper.Kind)
 	}
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"encoding/json"
+	// "encoding/json"
 	"context"
 
     plugin "github.com/defensestation/pluginutils"
@@ -14,16 +14,7 @@ const (
 )
 
 func (ad *AzureADPlugin) GetGroups(ctx context.Context, data interface{}) error {
-			var group *models.Group
-			groupJson, err := json.Marshal(data) 
-			if err != nil {
-				return err
-			}
-
-			err = json.Unmarshal(groupJson, &group)
-			if err != nil {
-				return err
-			}
+			group :=  data.(models.Group)
 
 			props, err := plugin.StructToMap(group)
 			if err != nil {

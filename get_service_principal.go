@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"encoding/json"
+	// "encoding/json"
 	"context"
 
     plugin "github.com/defensestation/pluginutils"
@@ -14,16 +14,16 @@ const (
 )
 
 func (ad *AzureADPlugin) GetServicePrincipal(ctx context.Context, data interface{}) error {
-			var servicePrincipal *models.ServicePrincipal
-			spJson, err := json.Marshal(data) 
-			if err != nil {
-				return err
-			}
+			servicePrincipal := data.(models.ServicePrincipal)
+			// spJson, err := json.Marshal(data) 
+			// if err != nil {
+			// 	return err
+			// }
 
-			err = json.Unmarshal(spJson, &servicePrincipal)
-			if err != nil {
-				return err
-			}
+			// err = json.Unmarshal(spJson, &servicePrincipal)
+			// if err != nil {
+			// 	return err
+			// }
 
 			props, err := plugin.StructToMap(servicePrincipal)
 			if err != nil {
