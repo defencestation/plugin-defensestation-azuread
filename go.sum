@@ -139,6 +139,10 @@ github.com/defensestation/azurehound v0.0.0-20240711021351-3b81065b2499 h1:rFjKm
 github.com/defensestation/azurehound v0.0.0-20240711021351-3b81065b2499/go.mod h1:O0w2KxuhNQkiLxq6iAePMtS/imujOoNPpF3teDCG0Qk=
 github.com/defensestation/azurehound v0.0.0-20240711022044-53ea8410748e h1:F3pNfzcE46SODMuSLAFX5y3sMrLpvf/TUUJG6h0snsE=
 github.com/defensestation/azurehound v0.0.0-20240711022044-53ea8410748e/go.mod h1:O0w2KxuhNQkiLxq6iAePMtS/imujOoNPpF3teDCG0Qk=
+github.com/defensestation/azurehound v0.0.0-20240711170336-216403af3f33 h1:ky2wI/E1QzexpIDXpUAJpZgCxjcYWelefCpSDoPqfZE=
+github.com/defensestation/azurehound v0.0.0-20240711170336-216403af3f33/go.mod h1:O0w2KxuhNQkiLxq6iAePMtS/imujOoNPpF3teDCG0Qk=
+github.com/defensestation/azurehound v0.0.0-20240712023212-af73ec33f83f h1:mQ83XGDQUm5r9z9XAQ+VYXHUjxxSnF9laSt4iz88BeI=
+github.com/defensestation/azurehound v0.0.0-20240712023212-af73ec33f83f/go.mod h1:JBmIz06S3ZbTo+GWoPhENkOnRrpsbZUBV4Yz3kjfqVw=
 github.com/defensestation/goutils v0.0.0-20240615214920-4c235ed080ef h1:wemON+y3jcmUzPeQpnxe0Cm68pegmK6qIv0dv5oWjUY=
 github.com/defensestation/goutils v0.0.0-20240615214920-4c235ed080ef/go.mod h1:MxM5yY6rMg2cuD++xEt77zE5lfR37MrWOPlKN+PcYC0=
 github.com/defensestation/pluginutils v0.0.0-20240703025805-b2b7a6094f8c h1:srJ/LTsmfjoTTLt3M8yz/yzDA3gsNUAAWSwyKcxl3Z8=
@@ -349,6 +353,14 @@ github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsT
 github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/subosito/gotenv v1.6.0 h1:9NlTDc1FTs4qu0DDq7AEtTPNw6SVm7uBMsUCUjABIf8=
 github.com/subosito/gotenv v1.6.0/go.mod h1:Dk4QP5c2W3ibzajGcXpNraDfq2IrhjMIvMSWPKKo0FU=
+github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8 h1:u+kxnRXxx+0O5SiefP3oTt4jeeIx+rYf1jkdW2qd2Ss=
+github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8/go.mod h1:6M53rd6DvbzoLbFnL3bjCsDSkCYh4i2yqW04hxr1/5o=
+github.com/tidwall/gjson v1.17.1 h1:wlYEnwqAHgzmhNUFfw7Xalt2JzQvsMx2Se4PcoFCT/U=
+github.com/tidwall/gjson v1.17.1/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
+github.com/tidwall/match v1.1.1 h1:+Ho715JplO36QYgwN9PGYNhgZvoUSc9X2c80KVTi+GA=
+github.com/tidwall/match v1.1.1/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
+github.com/tidwall/pretty v1.2.0 h1:RWIZEg2iJ8/g6fDDYzMpobmaoGh5OLl4AXtGUGPcqCs=
+github.com/tidwall/pretty v1.2.0/go.mod h1:ITEVvHYasfjBbM0u2Pg8T2nJnzm8xPwvNhhsoaGGjNU=
 github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a h1:fZHgsYlfvtyqToslyjUt3VOPF4J7aK/3MPcK7xp3PDk=
 github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a/go.mod h1:ul22v+Nro/R083muKhosV54bj5niojjWZvU8xrevuH4=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=

@@ -5,7 +5,7 @@ go 1.22.1
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.7.0
 	github.com/aws/aws-lambda-go v1.47.0
-	github.com/defensestation/azurehound v0.0.0-20240711022044-53ea8410748e
+	github.com/defensestation/azurehound v0.0.0-20240712023212-af73ec33f83f
 	github.com/defensestation/pluginutils v0.0.0-20240708073128-797389b0a521
 	github.com/microsoftgraph/msgraph-sdk-go v1.45.0
 	github.com/microsoftgraph/msgraph-sdk-go-core v1.1.0
@@ -82,6 +82,10 @@ require (
 	github.com/std-uritemplate/std-uritemplate/go v0.0.55 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
+	github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8 // indirect
+	github.com/tidwall/gjson v1.17.1 // indirect
+	github.com/tidwall/match v1.1.1 // indirect
+	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a // indirect
 	go.opentelemetry.io/otel v1.24.0 // indirect
 	go.opentelemetry.io/otel/metric v1.24.0 // indirect
