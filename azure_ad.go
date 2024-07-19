@@ -23,6 +23,15 @@ func (ad *AzureADPlugin) Run(ctx context.Context) error {
 
     ad.Options = options
 
+    if ad.Options.UserEmailArray != nil && len(ad.Options.UserEmailArray) != 0{
+    	err = ad.ListByUserEmails(ctx)
+    	if err != nil {
+    		return fmt.Errorf("Unable to list by users")
+    	}
+
+    	return nil
+    }
+
     err = ad.setAzureADClient(ctx)
    	if err != nil {
    		return fmt.Errorf("Unable setup azuread client: %v", err)

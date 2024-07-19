@@ -31,5 +31,5 @@ func (ad *AzureADPlugin) GetGroups(ctx context.Context, data interface{}) error 
 				fmt.Errorf("unable to create subscription node: %v", err)
 			}
 	
-return nil
+	return nil
 }

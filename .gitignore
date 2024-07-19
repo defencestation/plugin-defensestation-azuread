@@ -5,3 +5,5 @@ abcd.go
 test
 test.json
 heap.pdf
+generated
+*.pdf
